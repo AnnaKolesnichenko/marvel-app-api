@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+// import { Route, Routes } from 'react-router-dom';
 
 import AppHeader from '../appHeader/AppHeader';
 import RandomChar from '../randomChar/RandomChar';
