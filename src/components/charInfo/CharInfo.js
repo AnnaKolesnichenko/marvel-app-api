@@ -12,7 +12,7 @@ const CharInfo = ({ itemId }) => {
 
   useEffect(() => {
     getCharacterById(itemId);
-  });
+  }, [itemId]);
 
   const getCharacterById = (id) => {
     setLoading(true);

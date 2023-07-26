@@ -17,7 +17,7 @@ const ComicsList = () => {
 
     useEffect(() => {
         fetchComics();
-    });
+    }, []);
 
     const fetchComics = async () => {
         setLoading(true);

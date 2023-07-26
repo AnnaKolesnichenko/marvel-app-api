@@ -16,7 +16,7 @@ const RandomChar = (props) => {
 
     useEffect(() => {
         renderRandomChar();
-    });
+    }, []);
 
     const renderRandomChar = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
