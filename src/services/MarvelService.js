@@ -1,8 +1,8 @@
-const BASE_URL = "https://gateway.marvel.com:443/v1/public/";
-const API_KEY = "aad1f0bca3e8b5a1690fe2572a3a23f4";
+const BASE_URL = 'https://gateway.marvel.com:443/v1/public/';
+const API_KEY = 'aad1f0bca3e8b5a1690fe2572a3a23f4';
 const BASE_OFFSET = 210;
 
-const getResults = async (query) => {
+const getResults = async query => {
   let res = await fetch(query);
   if (!res.ok) {
     throw new Error(`There is no ${query} query, status is ${res.status}`);
@@ -17,7 +17,7 @@ export const getAllCharacters = async (offset = BASE_OFFSET) => {
   return res.data;
 };
 
-export const getOneCharacter = async (queryId) => {
+export const getOneCharacter = async queryId => {
   const res = await getResults(
     `${BASE_URL}characters/${queryId}?apikey=${API_KEY}`
   );
@@ -26,11 +26,11 @@ export const getOneCharacter = async (queryId) => {
 
 export const getAllComic = async (offset = BASE_OFFSET) => {
   const res = await getResults(
-    `${BASE_URL}comics?limit=9&offset=${offset}&apikey=${API_KEY}`
+    `${BASE_URL}comics?limit=8&offset=${offset}&apikey=${API_KEY}`
     // "https://gateway.marvel.com:443/v1/public/comics?limit=9&offset=210&apikey=aad1f0bca3e8b5a1690fe2572a3a23f4"
   );
   return res.data;
-}
+};
 
 // class MarvelService {
 

@@ -1,61 +1,46 @@
-// import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import AppHeader from '../appHeader/AppHeader';
-import AppBanner from 'components/appBanner/AppBanner';
-import RandomChar from '../randomChar/RandomChar';
-import CharInfo from '../charInfo/CharInfo';
-import CharList from '../charList/CharList';
-import ComicsList from '../comicsList/ComicsList';
+import MainPage from 'components/pages/MainPage';
+import ComicsPage from 'components/pages/ComicsPage';
+import SingleComicPage from 'components/pages/SingleComicPage';
+import NotExist from 'components/pages/404';
 
-import { useState } from 'react';
-
-import decoration from '../../resources/img/vision.png';
 import './app.scss';
 
 const App = () => {
-  const [itemId, setItemId] = useState('');
-
-  const handleItemClicked = id => {
-    setItemId(id);
-    console.log(itemId);
-  };
-
   return (
-    <div className="app">
-      <AppHeader />
-      <main>
-        {/* <RandomChar />
-        <div className='char__content'>
-          <CharList handleItemClicked={handleItemClicked}/>
-          <CharInfo itemId={itemId}/>
-          
-        </div> */}
-        <AppBanner />
-        <ComicsList />
-        {/* <img className='bg-decoration' src={decoration} alt="vision"/> */}
-      </main>
-    </div>
+    <Routes>
+      <Route path="/" element={<AppHeader />}>
+        <Route path="/" element={<MainPage />}></Route>
+        <Route path="/comics" element={<ComicsPage />}></Route>
+        <Route path="comics/:comicId" element={<SingleComicPage />}></Route>
+      </Route>
+      <Route path="*" element={<NotExist />} />
+    </Routes>
   );
-
-  /*return (
-    <div className="app">
-      <Routes>
-        <Route path='/' element={<AppHeader/>}>
-        <>
-          <Route path='/' element={<RandomChar />}></Route>
-          
-            <Route path="characters" element={<CharList handleItemClicked={handleItemClicked}/>}/>
-            <Route path="charchters/:charId" element={<CharInfo itemId={itemId}/>}/>
-          
-          
-        </>
-        </Route>
-        
-      </Routes>
-
-        
-    </div>
-  ); */
 };
+
+/*return (
+    <div className="app">
+      <div className="app">
+        <AppHeader />
+        <main>
+            {/* <RandomChar />
+            <div className="char__content">
+              <CharList handleItemClicked={handleItemClicked} />
+              <CharInfo itemId={itemId} />
+            </div> */
+
+// <AppBanner />
+// <ComicsList />
+
+/* <img className='bg-decoration' src={decoration} alt="vision"/> */
+//           </main>
+//         </div>
+
+//     </div>
+//   ); */
+// };
 
 export default App;

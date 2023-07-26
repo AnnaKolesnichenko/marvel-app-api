@@ -4,13 +4,9 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './components/app/App';
 
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter >
+  <BrowserRouter basename="/marvel-api-app">
     <App />
   </BrowserRouter>
 );
-
-
