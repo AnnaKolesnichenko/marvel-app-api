@@ -14,7 +14,7 @@ const CharList = (props) => {
 
   useEffect(() => {
     fetchCaharacters();
-  }, []);
+  });
 
   const fetchCaharacters = async () => {
     setLoading(true);

@@ -17,7 +17,7 @@ const ComicsList = () => {
 
     useEffect(() => {
         fetchComics();
-    }, []);
+    });
 
     const fetchComics = async () => {
         setLoading(true);
@@ -69,9 +69,9 @@ const ComicsList = () => {
      })}
                 
             </ul>
-            <button className="button button__main button__long" onClick={onPageUploaded}>
+            {loadBtn && <button className="button button__main button__long" onClick={onPageUploaded}>
                 <div className="inner">load more</div>
-            </button>
+            </button>}
         </div>
     )
 }
