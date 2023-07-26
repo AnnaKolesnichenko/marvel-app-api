@@ -1,6 +1,7 @@
 // import { Route, Routes } from 'react-router-dom';
 
 import AppHeader from '../appHeader/AppHeader';
+import AppBanner from 'components/appBanner/AppBanner';
 import RandomChar from '../randomChar/RandomChar';
 import CharInfo from '../charInfo/CharInfo';
 import CharList from '../charList/CharList';
@@ -8,37 +9,31 @@ import ComicsList from '../comicsList/ComicsList';
 
 import { useState } from 'react';
 
-
 import decoration from '../../resources/img/vision.png';
 import './app.scss';
 
 const App = () => {
-
   const [itemId, setItemId] = useState('');
 
-
-  const handleItemClicked = (id) => {
+  const handleItemClicked = id => {
     setItemId(id);
     console.log(itemId);
-  }
-
-  
+  };
 
   return (
     <div className="app">
-      <AppHeader/>
+      <AppHeader />
       <main>
-        <RandomChar />
+        {/* <RandomChar />
         <div className='char__content'>
           <CharList handleItemClicked={handleItemClicked}/>
           <CharInfo itemId={itemId}/>
           
-        </div>
-        <ComicsList/>
-        <img className='bg-decoration' src={decoration} alt="vision"/>
+        </div> */}
+        <AppBanner />
+        <ComicsList />
+        {/* <img className='bg-decoration' src={decoration} alt="vision"/> */}
       </main>
-
-        
     </div>
   );
 
@@ -61,6 +56,6 @@ const App = () => {
         
     </div>
   ); */
-}
+};
 
 export default App;
