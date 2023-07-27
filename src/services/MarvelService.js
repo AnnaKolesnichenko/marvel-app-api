@@ -32,6 +32,13 @@ export const getAllComic = async (offset = BASE_OFFSET) => {
   return res.data;
 };
 
+export const getOneComic = async queryId => {
+  const res = await getResults(
+    `${BASE_URL}comics/${queryId}?apikey=${API_KEY}`
+  );
+  return res.data;
+};
+
 // class MarvelService {
 
 //     BASE_URL = 'https://gateway.marvel.com:443/v1/public/';

@@ -1,23 +1,28 @@
 import { Route, Routes } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 
 import AppHeader from '../appHeader/AppHeader';
+import Spinner from 'components/spinner/Spinner';
 import MainPage from 'components/pages/MainPage';
 import ComicsPage from 'components/pages/ComicsPage';
 import SingleComicPage from 'components/pages/SingleComicPage';
-import NotExist from 'components/pages/404';
-
 import './app.scss';
+
+const NotExist = lazy(() => import('../pages/404'));
+// import NotExist from 'components/pages/404';
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<AppHeader />}>
-        <Route path="/" element={<MainPage />}></Route>
-        <Route path="/comics" element={<ComicsPage />}></Route>
-        <Route path="comics/:comicId" element={<SingleComicPage />}></Route>
-      </Route>
-      <Route path="*" element={<NotExist />} />
-    </Routes>
+    <Suspense fallback={<Spinner />}>
+      <Routes>
+        <Route path="/" element={<AppHeader />}>
+          <Route path="/" element={<MainPage />}></Route>
+          <Route path="/comics" element={<ComicsPage />}></Route>
+          <Route path="comics/:comicId" element={<SingleComicPage />}></Route>
+        </Route>
+        <Route path="*" element={<NotExist />} />
+      </Routes>
+    </Suspense>
   );
 };
 
