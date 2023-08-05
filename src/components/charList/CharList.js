@@ -1,16 +1,31 @@
-import { getAllCharacters } from "../../services/MarvelService";
-import { useState, useEffect } from "react";
-import Error from "../error/Error";
-import Spinner from "../spinner/Spinner";
+import { getAllCharacters } from '../../services/MarvelService';
+import { useState, useEffect } from 'react';
+import { Transition } from 'react-transition-group';
+import Error from '../error/Error';
+import Spinner from '../spinner/Spinner';
 
-import "./charList.scss";
+import './charList.scss';
 
-const CharList = (props) => {
+const CharList = props => {
   const [itemList, setItemList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [loadBtn, setLoadBtn] = useState(false);
   const [offset, setOffset] = useState(210);
+
+  const duration = 300;
+
+  const defaultStyle = {
+    transition: `opacity ${duration}ms ease-in-out`,
+    opacity: 0,
+  };
+
+  const transitionStyles = {
+    entering: { opacity: 1 },
+    entered: { opacity: 1 },
+    exiting: { opacity: 0 },
+    exited: { opacity: 0 },
+  };
 
   useEffect(() => {
     fetchCaharacters();
@@ -20,23 +35,22 @@ const CharList = (props) => {
     setLoading(true);
     clearError();
     try {
-      await getAllCharacters(offset).then((res) => {
-        
-        if(res.results.length < 9 || res.results.length === 0) {
+      await getAllCharacters(offset).then(res => {
+        if (res.results.length < 9 || res.results.length === 0) {
           setLoadBtn(false);
-        } setLoadBtn(true);
-        
-        setItemList((prevState) => [...prevState, ...res.results]);
-        setOffset((prevOffset) => prevOffset + 9);
-        setLoading(false);
+        }
+        setLoadBtn(true);
 
+        setItemList(prevState => [...prevState, ...res.results]);
+        setOffset(prevOffset => prevOffset + 9);
+        setLoading(false);
       });
     } catch (error) {
       onError();
     }
   };
 
-  const getCharId = (id) => {
+  const getCharId = id => {
     props.handleItemClicked(id);
   };
 
@@ -49,23 +63,23 @@ const CharList = (props) => {
     setLoading(false);
   };
 
-  const clearError = (error) => {
+  const clearError = error => {
     setError(null);
-  }
+  };
 
   return (
     <div className="char__list">
       {error && <Error />}
       {loading && <Spinner />}
       <ul className="char__grid">
-        {itemList.map((item) => {
+        {itemList.map(item => {
           const poster = `${item.thumbnail.path}.${item.thumbnail.extension}`;
-          let imgObjectFit = "cover";
+          let imgObjectFit = 'cover';
           if (
             poster ===
-            "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
+            'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'
           ) {
-            imgObjectFit = "contain";
+            imgObjectFit = 'contain';
           }
 
           return (
@@ -84,14 +98,15 @@ const CharList = (props) => {
           );
         })}
       </ul>
-      
-      {loadBtn && (<button
-        className="button button__main button__long"
-        onClick={onPageAdded}
-      >
-        <div className="inner">load more</div>
-      </button>)}
-        
+
+      {loadBtn && (
+        <button
+          className="button button__main button__long"
+          onClick={onPageAdded}
+        >
+          <div className="inner">load more</div>
+        </button>
+      )}
     </div>
   );
 };
