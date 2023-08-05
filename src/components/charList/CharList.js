@@ -1,6 +1,6 @@
 import { getAllCharacters } from '../../services/MarvelService';
 import { useState, useEffect } from 'react';
-import { Transition } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Error from '../error/Error';
 import Spinner from '../spinner/Spinner';
 
@@ -13,19 +13,7 @@ const CharList = props => {
   const [loadBtn, setLoadBtn] = useState(false);
   const [offset, setOffset] = useState(210);
 
-  const duration = 300;
-
-  const defaultStyle = {
-    transition: `opacity ${duration}ms ease-in-out`,
-    opacity: 0,
-  };
-
-  const transitionStyles = {
-    entering: { opacity: 1 },
-    entered: { opacity: 1 },
-    exiting: { opacity: 0 },
-    exited: { opacity: 0 },
-  };
+  const duration = 500;
 
   useEffect(() => {
     fetchCaharacters();
@@ -71,8 +59,9 @@ const CharList = props => {
     <div className="char__list">
       {error && <Error />}
       {loading && <Spinner />}
-      <ul className="char__grid">
-        {itemList.map(item => {
+
+      <TransitionGroup component="ul" className="char__grid">
+        {itemList.map((item, i) => {
           const poster = `${item.thumbnail.path}.${item.thumbnail.extension}`;
           let imgObjectFit = 'cover';
           if (
@@ -83,21 +72,27 @@ const CharList = props => {
           }
 
           return (
-            <li
-              className="char__item"
-              key={item.id}
-              onClick={() => getCharId(item.id)}
+            <CSSTransition
+              in={item[i]}
+              timeout={duration}
+              classNames="char__item"
             >
-              <img
-                src={poster}
-                alt={item.name}
-                style={{ objectFit: imgObjectFit }}
-              />
-              <div className="char__name">{item.name}</div>
-            </li>
+              <li
+                className="char__item"
+                key={item.id}
+                onClick={() => getCharId(item.id)}
+              >
+                <img
+                  src={poster}
+                  alt={item.name}
+                  style={{ objectFit: imgObjectFit }}
+                />
+                <div className="char__name">{item.name}</div>
+              </li>
+            </CSSTransition>
           );
         })}
-      </ul>
+      </TransitionGroup>
 
       {loadBtn && (
         <button
