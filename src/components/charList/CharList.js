@@ -1,5 +1,6 @@
 import { getAllCharacters } from "../../services/MarvelService";
 import { useState, useEffect } from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Error from "../error/Error";
 import Spinner from "../spinner/Spinner";
 
@@ -11,6 +12,9 @@ const CharList = (props) => {
   const [error, setError] = useState(false);
   const [loadBtn, setLoadBtn] = useState(false);
   const [offset, setOffset] = useState(210);
+
+  const duration = 500;
+
 
   useEffect(() => {
     fetchCaharacters();
@@ -57,8 +61,8 @@ const CharList = (props) => {
     <div className="char__list">
       {error && <Error />}
       {loading && <Spinner />}
-      <ul className="char__grid">
-        {itemList.map((item) => {
+      <TransitionGroup component='ul' className="char__grid">
+        {itemList.map((item, i) => {
           const poster = `${item.thumbnail.path}.${item.thumbnail.extension}`;
           let imgObjectFit = "cover";
           if (
@@ -69,7 +73,8 @@ const CharList = (props) => {
           }
 
           return (
-            <li
+            <CSSTransition in={item[i]} timeout={duration} classNames='char__item'>
+              <li
               className="char__item"
               key={item.id}
               onClick={() => getCharId(item.id)}
@@ -81,9 +86,10 @@ const CharList = (props) => {
               />
               <div className="char__name">{item.name}</div>
             </li>
+            </CSSTransition>
           );
         })}
-      </ul>
+      </TransitionGroup>
       
       {loadBtn && (<button
         className="button button__main button__long"
