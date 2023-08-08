@@ -1,20 +1,48 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
 
+import { getCharacterByQuery } from "services/MarvelService";
 import "./searchForm.scss";
 import '../../style/button.scss';
 
 const SearchForm = () => {
+    const [marvel, setMarvel] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     const formik = useFormik({
         initialValues: {
           name: '',
         },
         validationSchema: Yup.object({
-          name: Yup.string().min(2, "Write more symbols for a better query").required("This field is required"),
+          name: Yup.string().required("This field is required"),
         }),
-        onSubmit: values => console.log(values, null, 2)
-      })
+        onSubmit: ({name}) => {
+            const searchValue = name.toLowerCase().trim();
+            fetchMarvelByQuery(searchValue);
+        }
+      });
+
+
+    useEffect(() => {
+        fetchMarvelByQuery(formik.values.name);
+    }, [formik.values.name]);
+
+    const fetchMarvelByQuery = async query => {
+        setLoading(true);
+        await getCharacterByQuery(query)
+        .then(res => {
+            setMarvel(res.results[0]);
+            setLoading(false);
+        })
+        .catch(error => {
+            setError(error);
+            setLoading(false);
+        });
+    };
+
 
     return (
         <div className="search__part">
@@ -32,9 +60,9 @@ const SearchForm = () => {
                     {formik.errors.name && formik.touched.name ? <div className="error">The Character was not found. Check the name and try again</div> : null}
             </label>
             <div className="char__btns" style={{marginTop: 0}}>
-                <a href="www.hompage.com" className="button button__main">
+                <Link to={`/characters/${formik.values.name}`} className="button button__main">
                     <div className="inner">Find</div>
-                </a>
+                </Link>
                 <a href="www.hompage.com" className="button button__main" style={{display: 'none'}}>
                     <div className="inner">Find</div>
                 </a>
