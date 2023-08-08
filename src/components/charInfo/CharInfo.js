@@ -5,6 +5,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../error/Error";
 import Skeleton from "../skeleton/Skleton";
+import SearchForm from "components/searchForm/SearchForm";
 
 const CharInfo = ({ itemId }) => {
   const [character, setCharacter] = useState(null);
@@ -36,7 +37,7 @@ const CharInfo = ({ itemId }) => {
   }
 
   if(!character) {
-    return <Skeleton/>
+    return <Skeleton/>;  
   }
 
   if (loading) {
@@ -60,6 +61,7 @@ const CharInfo = ({ itemId }) => {
   return (
     <TransitionGroup component={null}>
       <CSSTransition timeout={1000} classNames='char__fade'>
+        <div>
         <div className='char__info'>
         {/* {loading && <Spinner />} */}
         {error || !character ? (
@@ -93,9 +95,13 @@ const CharInfo = ({ itemId }) => {
             </ul>
           </>
         )}
-      </div>
+      </div>    
+        <SearchForm />  
+        </div>
+  
     </CSSTransition>
     </TransitionGroup>
+    
   );
 };
 

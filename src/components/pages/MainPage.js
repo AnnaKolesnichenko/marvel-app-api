@@ -5,6 +5,7 @@ import CharList from 'components/charList/CharList';
 import CharInfo from 'components/charInfo/CharInfo';
 
 import decoration from '../../resources/img/vision.png';
+import './mainPage.scss';
 
 const MainPage = () => {
   const [itemId, setItemId] = useState('');
@@ -20,7 +21,9 @@ const MainPage = () => {
         <CharList handleItemClicked={handleItemClicked} />
         <CharInfo itemId={itemId} />
       </div>
-      <img className="bg-decoration" src={decoration} alt="vision" />
+      <div className='background'>
+        <img className="bg-decoration" src={decoration} alt="vision" />
+      </div>
     </>
   );
 };

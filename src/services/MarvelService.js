@@ -39,6 +39,12 @@ export const getOneComic = async queryId => {
   return res.data;
 };
 
+export const getCharacterByQuery = async (query) => {
+  const res = await getResults(`${BASE_URL}/characters?name=${query}&apikey=${API_KEY}`);
+  return res;
+}
+
+
 // class MarvelService {
 
 //     BASE_URL = 'https://gateway.marvel.com:443/v1/public/';
