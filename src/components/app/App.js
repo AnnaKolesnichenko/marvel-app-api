@@ -6,6 +6,7 @@ import Spinner from 'components/spinner/Spinner';
 import MainPage from 'components/pages/MainPage';
 import ComicsPage from 'components/pages/ComicsPage';
 import SingleComicPage from 'components/pages/SingleComicPage';
+import SingleMarvelPage from 'components/pages/SingleMarvelPage';
 import './app.scss';
 
 const NotExist = lazy(() => import('../pages/404'));
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/" element={<MainPage />}></Route>
           <Route path="/comics" element={<ComicsPage />}></Route>
           <Route path="comics/:comicId" element={<SingleComicPage />}></Route>
+          <Route path="/comics/:marvelId" element={<SingleMarvelPage />} />
         </Route>
         <Route path="*" element={<NotExist />} />
       </Routes>
